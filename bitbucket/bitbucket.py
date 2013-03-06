@@ -168,6 +168,7 @@ class Bitbucket(object):
         'BASE': 'https://api.bitbucket.org/1.0/%s',
         # Get user profile and repos
         'GET_USER': 'users/%(username)s/',
+        'GET_USER_REPOS': 'user/repositories/',
         # Search repo
         # 'SEARCH_REPO': 'repositories/?name=%(search)s',
         # Get tags & branches
