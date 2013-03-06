@@ -8,20 +8,22 @@ class Service(object):
         self.bitbucket = bitbucket
         self.bitbucket.URLS.update(self.URLS)
 
-    def create(self, service, repo_slug=None, **kwargs):
+    def create(self, service, username=None, repo_slug=None, **kwargs):
         """ Add a service (hook) to one of your repositories.
             Each type of service require a different set of additionnal fields,
             you can pass them as keyword arguments (fieldname='fieldvalue').
         """
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('SET_SERVICE', username=self.bitbucket.username, repo_slug=repo_slug)
+        username = username or self.bitbucket.username
+        url = self.bitbucket.url('SET_SERVICE', username=username, repo_slug=repo_slug)
         return self.bitbucket.dispatch('POST', url, auth=self.bitbucket.auth, type=service, **kwargs)
 
-    def get(self, service_id, repo_slug=None):
+    def get(self, service_id, username=None, repo_slug=None):
         """ Get a service (hook) from one of your repositories.
         """
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('GET_SERVICE', username=self.bitbucket.username, repo_slug=repo_slug, service_id=service_id)
+        username = username or self.bitbucket.username
+        url = self.bitbucket.url('GET_SERVICE', username=username, repo_slug=repo_slug, service_id=service_id)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
     def update(self, service_id, repo_slug=None, **kwargs):
@@ -39,11 +41,12 @@ class Service(object):
         url = self.bitbucket.url('DELETE_SERVICE', username=self.bitbucket.username, repo_slug=repo_slug, service_id=service_id)
         return self.bitbucket.dispatch('DELETE', url, auth=self.bitbucket.auth)
 
-    def all(self, repo_slug=None):
+    def all(self, username=None, repo_slug=None):
         """ Get all services (hook) from one of your repositories.
         """
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('GET_SERVICES', username=self.bitbucket.username, repo_slug=repo_slug)
+        username = username or self.bitbucket.username
+        url = self.bitbucket.url('GET_SERVICES', username=username, repo_slug=repo_slug)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
     URLS = {
