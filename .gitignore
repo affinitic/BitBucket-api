@@ -1,5 +1,6 @@
 env/
 dist/
+*.egg-info
 *.pyc
 MANIFEST
 bitbucket/tests/private/settings.py
