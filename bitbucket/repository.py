@@ -76,10 +76,11 @@ class Repository(object):
         url = self.bitbucket.url('GET_REPO', username=self.bitbucket.username, repo_slug=repo_slug)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
-    def create(self, repo_name, scm='git', private=True, **kwargs):
+    def create(self, repo_name, scm='git', private=True, username=None, **kwargs):
         """ Creates a new repository on own Bitbucket account and return it."""
         url = self.bitbucket.url('CREATE_REPO')
-        return self.bitbucket.dispatch('POST', url, auth=self.bitbucket.auth, name=repo_name, scm=scm, is_private=private, **kwargs)
+        username = username or self.bitbucket.username
+        return self.bitbucket.dispatch('POST', url, auth=self.bitbucket.auth, owner=username, name=repo_name, scm=scm, is_private=private, **kwargs)
 
     def update(self, repo_slug=None, **kwargs):
         """ Updates repository on own Bitbucket account and return it."""
